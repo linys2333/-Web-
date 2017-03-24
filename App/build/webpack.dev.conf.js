@@ -1,55 +1,35 @@
-var webpack = require('webpack'),
-    config = require('./webpack.base.conf'),
-    HtmlWebpackPlugin = require('html-webpack-plugin'),
-    ExtractTextPlugin = require('extract-text-webpack-plugin'),
-    BrowserSyncPlugin = require('browser-sync-webpack-plugin'),
-    // SOURCE_MAP = true; // 大多数情况下用不到
-    SOURCE_MAP = false;
+var utils = require('./utils')
+var webpack = require('webpack')
+var config = require('../config')
+var merge = require('webpack-merge')
+var baseWebpackConfig = require('./webpack.base.conf')
+var HtmlWebpackPlugin = require('html-webpack-plugin')
+var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
-config.output.filename = '[name].js';
-config.output.chunkFilename = '[id].js';
+// add hot-reload related code to entry chunks
+Object.keys(baseWebpackConfig.entry).forEach(function(name) {
+    baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
+})
 
-config.devtool = SOURCE_MAP ? 'eval-source-map' : false;
-
-// add hot-reload related code to entry chunk
-config.entry.app = [
-    'eventsource-polyfill',
-    'webpack-hot-middleware/client?reload=true',
-    config.entry.app
-];
-
-config.output.publicPath = '/';
-
-// 开发环境下直接内嵌 CSS 以支持热替换
-config.module.loaders.push({
-    test: /\.css$/,
-    loader: 'style!css'
-}, {
-    test: /\.less$/,
-    loader: 'style!css!less'
-}, {
-    test: /\.scss$/,
-    loader: 'style!css!sass'
-});
-
-config.plugins.push(
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-    new ExtractTextPlugin('[name].css'),
-    new HtmlWebpackPlugin({
-        filename: 'index.html',
-        template: config.commonPath.indexHTML
-    }),
-    new BrowserSyncPlugin({
-        host: '127.0.0.1',
-        port: 8001,
-        proxy: 'http://127.0.0.1:8002/',
-        logConnections: false,
-        notify: false
-    }, {
-        reload: false
-    })
-);
-
-module.exports = config;
+module.exports = merge(baseWebpackConfig, {
+    module: {
+        rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap })
+    },
+    // cheap-module-eval-source-map is faster for development
+    devtool: '#cheap-module-eval-source-map',
+    plugins: [
+        new webpack.DefinePlugin({
+            'process.env': config.dev.env
+        }),
+        // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
+        // https://github.com/ampedandwired/html-webpack-plugin
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            template: './src/index.html',
+            inject: true
+        }),
+        new FriendlyErrorsPlugin()
+    ]
+})

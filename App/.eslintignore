@@ -1,5 +1,5 @@
-src/assets/**
-static/**
 node_modules/**
-src/app.js
 build/**
+src/assets/**
+src/app.js
+static/**
