@@ -24,13 +24,6 @@ build/Release
 
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
-node_modules
 
-obj
-bin
+node_modules
 packages
-*.suo
-/App/说明.txt
-/Server/IISHost/Log
-/Server/.vs/config/applicationhost.config
-/App/start.bat
