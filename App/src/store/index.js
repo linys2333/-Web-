@@ -1,14 +1,11 @@
-import Vue from 'vue'
 import Vuex from 'vuex'
-import doc from './doc'
-
-Vue.use(Vuex)
+import user from './user'
 
 const debug = process.env.NODE_ENV !== 'production'
 
 const store = new Vuex.Store({
     modules: {
-        doc
+        user
     },
     strict: debug
 })

@@ -2,24 +2,23 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import VueResource from 'vue-resource'
+import Vuex from 'vuex'
+import axios from 'axios'
+import FastClick from 'fastclick'
+import router from './router/'
 import store from './store/'
-import router from './routes/router'
+import App from 'COMPONENT/App'
 import './directives/'
 import './filters/'
-import FastClick from 'fastclick'
-import App from 'COMPONENT/App'
-import { httpHandle } from 'SERVICE/http'
+import 'SERVICE/http/init'
 
 Vue.use(VueRouter)
+Vue.use(Vuex)
 
-Vue.use(VueResource)
-Vue.http.options.emulateJSON = true
-Vue.http.interceptors.push(httpHandle)
+Vue.prototype.$http = axios
+Vue.config.productionTip = false
 
 FastClick.attach(document.body)
-
-Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
