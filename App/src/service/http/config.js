@@ -11,6 +11,6 @@ export const config = {
     // 根据Http响应状态码返回不同Promise类型
     // 如果 = true/null/undefined，返回resolve，否则返回reject
     validateStatus: function(status) {
-        return status >= 200 && status < 300; // default
+        return status >= 200 && status < 300 // default
     }
 }

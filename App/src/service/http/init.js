@@ -4,9 +4,9 @@ import router from 'ROUTER/'
 // 请求拦截
 axios.interceptors.request.use((config) => {
     // 身份验证
-    config.headers.get('Authorization') = sessionStorage.token || ''
+    config.headers.set('Authorization', sessionStorage.token || '')
 
-    return config;
+    return config
 }, (err) => {
     return Promise.reject(err)
 })
@@ -22,7 +22,7 @@ axios.interceptors.response.use((res) => {
 
     return res
 }, (err) => {
-    if (err.response.status === "401") {
+    if (err.response.status === '401') {
         sessionStorage.removeItem('token')
 
         alert('身份验证失败，请重新登陆')

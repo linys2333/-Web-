@@ -60,7 +60,7 @@
 </template>
 
 <script>
-    import Navbar from 'COMPONENT/Navbar/'
+    import Navbar from 'COMPONENT/pub/navbar'
     import {
         mapGetters
     } from 'vuex'

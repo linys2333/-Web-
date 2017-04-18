@@ -8,8 +8,8 @@ import FastClick from 'fastclick'
 import router from './router/'
 import store from './store/'
 import App from 'COMPONENT/App'
-import './directives/'
-import './filters/'
+import './directive/'
+import './filter/'
 import 'SERVICE/http/init'
 
 Vue.use(VueRouter)
