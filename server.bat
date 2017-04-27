@@ -1,4 +1,3 @@
 @echo on
-cd Server
-node app.js
-pause
+@rem 这种启动方式可以保证ctrl+c后不退出窗口
+@start cmd /k "cd Server && node app.js"

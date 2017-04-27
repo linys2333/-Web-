@@ -2,7 +2,6 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Vuex from 'vuex'
 import axios from 'axios'
 import FastClick from 'fastclick'
 import router from './router/'
@@ -13,7 +12,6 @@ import './filter/'
 import 'SERVICE/http/init'
 
 Vue.use(VueRouter)
-Vue.use(Vuex)
 
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
