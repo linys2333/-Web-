@@ -1,74 +1,49 @@
 <template>
-    <div class="container no-bar">
-        <div class="text-center logo">
-            <img :src="logoUrl" alt="" class="img-circle logo-icon" />
+    <div>
+        <div class="logo">
+            <img src="../../static/img/logo.png" alt="" class="logo-icon" />
         </div>
-        <div class="input-group">
-            <span class="input-group-addon">
-                <i class="glyphicon glyphicon-home"></i>
-            </span>
-            <input v-model="userInfo.tenantName" type="url" class="form-control" placeholder="企业代码">
-        </div>
-        <br/>
-        <div class="input-group">
-            <span class="input-group-addon">
-                <i class="glyphicon glyphicon-user"></i>
-            </span>
-            <input v-model="userInfo.userName" type="url" class="form-control" placeholder="账号">
-        </div>
-        <br/>
-        <div class="input-group">
-            <span class="input-group-addon">
-                <i class="glyphicon glyphicon-lock"></i>
-            </span>
-            <input v-model="userInfo.password" type="password" class="form-control" placeholder="密码">
-        </div>
-        <br/>
-        <div>
-            <button class="btn btn-info btn-block" v-saving="saving" @click="login">登录</button>
+        <group gutter="0">
+            <x-input v-model="userInfo.userName" type="email" title="账号">
+            </x-input>
+            <x-input v-model="userInfo.password" type="password" title="密码">
+            </x-input>
+        </group>
+        <div style="padding:15px;">
+            <x-button type="primary" v-saving="saving" @click.native="login">登录</x-button>
         </div>
     </div>
 </template>
 
 <script>
-    import logo from 'STATIC/img/logo.png'
-    import crypto from 'crypto'
+    import {
+        Group,
+        XInput,
+        XButton
+    } from 'vux'
 
     export default {
+        components: {
+            Group,
+            XInput,
+            XButton
+        },
         data() {
             return {
-                logoUrl: logo,
-                userInfo: {},
+                userInfo: {
+                    userName: '',
+                    password: ''
+                },
                 saving: false
             }
         },
-        created() {
-            let getter = this.$store.getters
-            this.userInfo = {
-                tenantName: getter.tenantName,
-                userName: getter.userName,
-                password: ''
-            }
-        },
+        created() {},
         computed: {},
         methods: {
             login() {
                 this.saving = true
 
-                this.$store.dispatch('getSecret', this.userInfo)
-                    .then(secret => {
-                        // 先对密码本身加密（数据库存储格式）
-                        this.userInfo.password = crypto.createHash('md5')
-                            .update(this.userInfo.password)
-                            .digest('hex')
-
-                        // 再按服务端颁发的随机串加密
-                        this.userInfo.password = crypto.createHash('md5')
-                            .update(`${this.userInfo.password}.${secret}`)
-                            .digest('hex')
-
-                        return this.$store.dispatch('login', this.userInfo)
-                    })
+                this.$store.dispatch('login', this.userInfo)
                     .then(() => this.$router.push('/'))
                     .catch(msg => {
                         alert(msg)

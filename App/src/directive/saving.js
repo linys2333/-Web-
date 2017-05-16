@@ -3,20 +3,18 @@ import Vue from 'vue'
 export default {
     bind(el, binding) {
         Vue.nextTick(() => {
-            el = $(el)
-            el.attr('__oldValue', el.text())
+            el.__oldValue = el.innerText
         })
     },
     update(el, binding) {
-        el = $(el)
-        let value = el.attr('__oldValue')
+        let value = el.__oldValue
 
         if (binding.value) {
-            el.prop('disabled', true)
-                .text(value + '中...')
+            el.disabled = true
+            el.innerText = value + '中...'
         } else {
-            el.prop('disabled', false)
-                .text(value)
+            el.disabled = false
+            el.innerText = value
         }
     }
 }

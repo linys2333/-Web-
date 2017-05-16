@@ -8,10 +8,6 @@ class UserService {
     logout() {
         return http.post('/User/Logout')
     }
-
-    getSecret(data) {
-        return http.post('/User/GetSecret', { dto: data })
-    }
 }
 
 // 实例化后再导出
