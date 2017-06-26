@@ -2,11 +2,11 @@ import http from './http/'
 
 class UserService {
     login(data) {
-        return http.post('/User/Login', { dto: data })
+        return http.post('/api/user/login', { dto: data })
     }
 
     logout() {
-        return http.post('/User/Logout')
+        return http.post('/api/user/logout')
     }
 }
 

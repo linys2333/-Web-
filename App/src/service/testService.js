@@ -2,7 +2,7 @@ import http from './http/'
 
 class TestService {
     getTestData() {
-        return http.get('/Biz/getTestData')
+        return http.get('/api/biz/getTestData')
     }
 }
 
