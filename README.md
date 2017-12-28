@@ -4,7 +4,7 @@
 
 > 前端框架基于Vue搭建，涉及Vuex，请求用axios
 
-> 后端框架准备学习2套，1套基于nodejs的Egg框架（毕竟node火嘛），1套基于.Net的Nancy框架（这个是本行嘛）
+> 后端框架采用基于nodejs的Egg框架
 
 ## 目录
 #### &sect; 架构设计
